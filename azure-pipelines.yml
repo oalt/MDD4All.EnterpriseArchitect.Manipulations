@@ -34,11 +34,11 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
- #- task: bleddynrichards.Assembly-Info-Task.Assembly-Info-NetCore.Assembly-Info-NetCore@2
- #   displayName: 'Set Assembly Manifest Data'
- #   inputs:
- #     FileNames: '**\AssemblyInfo.cs'
- #     VersionNumber: '$(fileversion).$(Rev:.r)'
+- task: Assembly-Info-NetCore@2
+   displayName: 'Set Assembly Manifest Data'
+   inputs:
+     FileNames: '**\AssemblyInfo.cs'
+     VersionNumber: '$(build.buildnumber)'
 
 - task: VSBuild@1
   inputs:
