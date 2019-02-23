@@ -13,14 +13,15 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  fileversion: ''
 
 steps:
 
-- script |
-  set /p VER=<src/version.txt
-  @echo ##vso[task.setvariable variable=fileversion]%VER%
+- script: |
+    set /p VER=<src/version.txt
+    @echo ##vso[task.setvariable variable=fileversion]%VER%
 
-- script |
+- script: |
     echo The file version is $(fileversion)
 
 - task: NuGetToolInstaller@0
