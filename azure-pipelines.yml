@@ -14,6 +14,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   fileversion: ''
+  nugetVersion: '$(fileversion).$(Rev:.r)'
 
 # name: $(fileversion).$(Rev:.r)
 
@@ -45,8 +46,6 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: NuGetCommand@2
-  variables:
-    nugetVersion: $(fileversion).$(Rev:.r)
   inputs:
     command: pack
     packagesToPack: '**/*.csproj'
