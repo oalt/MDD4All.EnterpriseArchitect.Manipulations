@@ -26,7 +26,7 @@ steps:
 
 - script: |
     echo The version from src/version.txt is $(versionToBuild)
-    @echo ##vso[build.updatebuildnumber]$(build.buildnumber).$(versionToBuild)
+    @echo ##vso[build.updatebuildnumber]$(versionToBuild).$(build.buildnumber)
 
 - task: NuGetToolInstaller@0
 
