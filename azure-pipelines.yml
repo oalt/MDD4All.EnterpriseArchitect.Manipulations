@@ -52,3 +52,8 @@ steps:
     versioningScheme: byEnvVar
     versionEnvVar: versionToBuild
     packDestination: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: EAAPI
