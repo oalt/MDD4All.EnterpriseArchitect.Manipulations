@@ -15,7 +15,7 @@ variables:
   buildConfiguration: 'Release'
   fileversion: ''
 
-name: $(fileversion).$(Rev:.r)
+# name: $(fileversion).$(Rev:.r)
 
 steps:
 
@@ -32,6 +32,12 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+ - task: bleddynrichards.Assembly-Info-Task.Assembly-Info-NetCore.Assembly-Info-NetCore@2
+    displayName: 'Set Assembly Manifest Data'
+    inputs:
+      FileNames: '**\AssemblyInfo.cs'
+      VersionNumber: '$(fileversion).$(Rev:.r)'
+
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
@@ -39,6 +45,10 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: NuGetCommand@2
+  variables:
+    nugetVersion: $(fileversion).$(Rev:.r)
   inputs:
     command: pack
     packagesToPack: '**/*.csproj'
+    versioningScheme: byEnvVar
+    versionEnvVar: nugetVersion
