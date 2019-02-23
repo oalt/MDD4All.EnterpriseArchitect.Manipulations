@@ -15,6 +15,14 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+
+- script |
+  set /p VER=<src/version.txt
+  @echo ##vso[task.setvariable variable=fileversion]%VER%
+
+- script |
+    echo The file version is $(fileversion)
+
 - task: NuGetToolInstaller@0
 
 - task: NuGetCommand@2
