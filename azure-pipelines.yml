@@ -13,8 +13,8 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  fileversion: ''
-  nugetVersion: '$(fileversion).$(Rev:.r)'
+  versionToBuild: ''
+  
 
 # name: $(fileversion).$(Rev:.r)
 
@@ -22,7 +22,7 @@ steps:
 
 - script: |
     set /p VER=<src/version.txt
-    @echo ##vso[task.setvariable variable=fileversion]%VER%
+    @echo ##vso[task.setvariable variable=versionToBuild]%VER%.%Rev:.r%
 
 - script: |
     echo The version from src/version.txt is $(fileversion)
@@ -50,4 +50,4 @@ steps:
     command: pack
     packagesToPack: '**/*.csproj'
     versioningScheme: byEnvVar
-    versionEnvVar: nugetVersion
+    versionEnvVar: versionToBuild
