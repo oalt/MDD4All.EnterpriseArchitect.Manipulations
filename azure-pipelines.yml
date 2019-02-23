@@ -26,7 +26,7 @@ steps:
 
 - script: |
     echo The version from src/version.txt is $(versionToBuild)
-    @echo ##vso[build.updatebuildnumber]$(versionToBuild).$(build.buildnumber)
+    @echo ##vso[build.updatebuildnumber]$(versionToBuild)$(build.buildnumber)
 
 - task: NuGetToolInstaller@0
 
@@ -50,8 +50,7 @@ steps:
   inputs:
     command: pack
     packagesToPack: '**/*.csproj'
-    versioningScheme: byEnvVar
-    versionEnvVar: versionToBuild
+    versioningScheme: byBuildNumber
     packDestination: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
