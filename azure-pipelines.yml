@@ -16,7 +16,7 @@ variables:
   versionToBuild: ''
   
 
-# name: $(fileversion).$(Rev:.r)
+name: $(Rev:.r)
 
 steps:
 
@@ -26,7 +26,7 @@ steps:
 
 - script: |
     echo The version from src/version.txt is $(versionToBuild)
-    @echo ##vso[build.updatebuildnumber]$(versionToBuild)
+    @echo ##vso[build.updatebuildnumber]$(build.buildnumber).$(versionToBuild)
 
 - task: NuGetToolInstaller@0
 
