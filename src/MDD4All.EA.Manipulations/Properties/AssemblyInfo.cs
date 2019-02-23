@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // Allgemeine Informationen über eine Assembly werden über die folgenden 
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
-[assembly: AssemblyTitle("MDD4All.EA.Manipulations")]
+[assembly: AssemblyTitle("MDD4All.EnterpriseArchitect.Manipulations")]
 [assembly: AssemblyDescription("Interop.EA manipulation extensions")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MDD4All.de")]
