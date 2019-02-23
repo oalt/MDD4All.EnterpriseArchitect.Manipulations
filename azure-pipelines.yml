@@ -16,7 +16,7 @@ variables:
   versionToBuild: ''
   
 
-name: $(Rev:.r)
+name: $(BuildID)
 
 steps:
 
@@ -26,7 +26,7 @@ steps:
 
 - script: |
     echo The version from src/version.txt is $(versionToBuild)
-    @echo ##vso[build.updatebuildnumber]$(versionToBuild)$(build.buildnumber)
+    @echo ##vso[build.updatebuildnumber]$(versionToBuild).$(build.buildnumber)
 
 - task: NuGetToolInstaller@0
 
@@ -34,12 +34,7 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-#- task: Assembly-Info-NetCore@2
-#   displayName: 'Set Assembly Manifest Data'
-#   inputs:
-#     FileNames: '**\AssemblyInfo.cs'
-#     VersionNumber: '$(build.buildnumber)'
-
+# update assembly version
 - powershell: |
     function Update-SourceVersion
     {
