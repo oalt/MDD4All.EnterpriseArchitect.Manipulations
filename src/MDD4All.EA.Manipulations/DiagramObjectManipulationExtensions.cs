@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Drawing;
+using System.Diagnostics;
+
 #if FACADE
 using EAAPI = MDD4All.EAFacade;
 #else
@@ -17,6 +16,34 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 {
 	public static class DiagramObjectManipulationExtensions
 	{
+		/// <summary>
+		/// Add a model element to a diagram.
+		/// </summary>
+		/// <param name="diagram">The diagram.</param>
+		/// <param name="element">The element to add.</param>
+		public static void AddElement(this EAAPI.Diagram diagram, EAAPI.Element element)
+		{
+			for (short i = 0; i < diagram.DiagramObjects.Count; i++)
+			{
+				EAAPI.DiagramObject existingDiagramObject = diagram.DiagramObjects.GetAt(i) as EAAPI.DiagramObject;
+				if (existingDiagramObject.ElementID == element.ElementID)
+				{
+					// Element still on diagram, return
+					return;
+				}
+			}
+
+			EAAPI.DiagramObject diagramObject = (EAAPI.DiagramObject)diagram.DiagramObjects.AddNew("", "");
+
+			diagramObject.ElementID = element.ElementID;
+
+			if (!diagramObject.Update())
+			{
+				Debug.WriteLine(diagramObject.GetLastError());
+			}
+			diagram.Update();
+		}
+
 		public static Point GetLabelSize(this EAAPI.DiagramObject portDiagramObject)
 		{
 			Point result = new Point();

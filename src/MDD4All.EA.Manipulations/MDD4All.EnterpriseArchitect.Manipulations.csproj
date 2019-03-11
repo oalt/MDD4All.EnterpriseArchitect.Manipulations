@@ -51,9 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectorManipulationExtensions.cs" />
     <Compile Include="DiagramObjectManipulationExtensions.cs" />
     <Compile Include="ElementManipulationExtensions.cs" />
+    <Compile Include="PackageManipulationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryManipulationExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MDD4All.EnterpriseArchitect.Manipulations.nuspec" />

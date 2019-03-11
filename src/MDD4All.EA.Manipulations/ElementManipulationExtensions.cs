@@ -1,10 +1,11 @@
-﻿#if FACADE
+﻿using System.Diagnostics;
+#if FACADE
 using EAAPI = MDD4All.EAFacade;
 #else
 using EAAPI = EA;
 #endif
 
-#if EAAPI
+#if FACADE
 namespace MDD4All.EAFacade.Manipulations
 #else
 namespace MDD4All.EnterpriseArchitect.Manipulations
@@ -15,6 +16,52 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 	/// </summary>
 	public static class ElementManipulationExtensions
 	{
+		public static EAAPI.Element GetParentElement(this EAAPI.Element childElement, EAAPI.Repository repository)
+		{
+			return repository.GetElementByID(childElement.ParentID);
+		}
+
+		public static EAAPI.Element AddEmbeddedElement(this EAAPI.Element parent, EAAPI.Repository repository,
+													   string name, string type)
+		{
+			EAAPI.Element result = null;
+
+			if (string.IsNullOrEmpty(name))
+			{
+				name = "empty";
+			}
+
+			if (parent.Type == "Package")
+			{
+				EAAPI.Package package = repository.GetPackageByGuid(parent.ElementGUID) as EAAPI.Package;
+				result = package.AddElement(name, type);
+			}
+			else
+			{
+				EAAPI.Element newElement = (EAAPI.Element)parent.Elements.AddNew(name, type);
+				if (!newElement.Update())
+				{
+					Debug.WriteLine(newElement.GetLastError());
+				}
+				parent.Elements.Refresh();
+
+				result = newElement;
+			}
+
+			return result;
+		}
+
+		public static EAAPI.Connector AddConnector(this EAAPI.Element source, EAAPI.Element target, string connetcorType)
+		{
+			EAAPI.Connector connector = (EAAPI.Connector)source.Connectors.AddNew("", connetcorType);
+			connector.SupplierID = target.ElementID;
+			connector.Update();
+
+			source.Connectors.Refresh();
+
+			return connector;
+		}
+
 		public static string GetClassifierName(this EAAPI.Element element, EAAPI.Repository repository)
 		{
 			string result = "";
@@ -126,5 +173,36 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 			modelElement.TaggedValues.Refresh();
 
 		}
+
+		public static EAAPI.Method AddMethod(this EAAPI.Element parent, string name, string returnType = "void")
+		{
+			EAAPI.Method method = (EAAPI.Method)parent.Methods.AddNew(name, returnType); // 2nd parameter == return type
+			method.Update();
+			parent.Refresh();
+
+			return method;
+		}
+
+		public static EAAPI.Attribute AddAttribute(this EAAPI.Element parent, string name, string type)
+		{
+			EAAPI.Attribute attribute = (EAAPI.Attribute)parent.Attributes.AddNew(name, type);
+			attribute.Update();
+			parent.Attributes.Refresh();
+
+			return attribute;
+		}
+
+		public static void SetBackgroundColor(this EAAPI.Element element, int color)
+		{
+			element.SetAppearance(1, 0, color);
+			element.Update();
+		}
+
+		public static void SetBorderColor(EAAPI.Element element, int color)
+		{
+			element.SetAppearance(1, 2, color);
+			element.Update();
+		}
+
 	}
 }
