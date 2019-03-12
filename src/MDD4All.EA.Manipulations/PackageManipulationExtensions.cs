@@ -7,7 +7,7 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 	public static class PackageManipulationExtensions
 	{
 
-		public static EAAPI.Package AddChildPackage(EAAPI.Package parentPackage, string name)
+		public static EAAPI.Package AddChildPackage(this EAAPI.Package parentPackage, string name)
 		{
 			// avoid null value for package name
 			string packageName = "_UNDEFINED_";
