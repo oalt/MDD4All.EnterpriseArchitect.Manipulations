@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectorManipulationExtensions.cs" />
+    <Compile Include="DiagramManipulationExtensions.cs" />
     <Compile Include="DiagramObjectManipulationExtensions.cs" />
     <Compile Include="ElementManipulationExtensions.cs" />
     <Compile Include="PackageManipulationExtensions.cs" />
