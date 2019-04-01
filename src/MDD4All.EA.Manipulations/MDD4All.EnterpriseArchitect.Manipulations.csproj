@@ -55,6 +55,7 @@
     <Compile Include="DiagramManipulationExtensions.cs" />
     <Compile Include="DiagramObjectManipulationExtensions.cs" />
     <Compile Include="ElementManipulationExtensions.cs" />
+    <Compile Include="ObjectRunState.cs" />
     <Compile Include="PackageManipulationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryManipulationExtensions.cs" />

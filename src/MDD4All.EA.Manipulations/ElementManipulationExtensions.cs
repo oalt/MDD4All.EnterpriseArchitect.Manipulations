@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 #if FACADE
 using EAAPI = MDD4All.EAFacade;
 #else
@@ -198,10 +199,158 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 			element.Update();
 		}
 
-		public static void SetBorderColor(EAAPI.Element element, int color)
+		public static void SetBorderColor(this EAAPI.Element element, int color)
 		{
 			element.SetAppearance(1, 2, color);
 			element.Update();
+		}
+
+		public static string GetRunStateValue(this EAAPI.Element element, string variableName)
+		{
+			string result = "";
+
+			Dictionary<string, ObjectRunState> runStates = ParseRunStateString(element.RunState);
+
+			if (runStates.ContainsKey(variableName))
+			{
+				result = runStates[variableName].Value;
+			}
+
+			return result;
+		}
+
+		public static ObjectRunState GetRunStateByName(this EAAPI.Element element, string variableName)
+		{
+			ObjectRunState result = null;
+
+			Dictionary<string, ObjectRunState> runStates = ParseRunStateString(element.RunState);
+
+			if (runStates.ContainsKey(variableName))
+			{
+				result = runStates[variableName];
+			}
+
+			return result;
+		}
+
+		public static void SetRunStateValue(this EAAPI.Element element, string variableName, string value, string operation)
+		{
+			if (variableName != null && variableName != "")
+			{
+				Dictionary<string, ObjectRunState> runStates = ParseRunStateString(element.RunState);
+
+				if (value != null && value != "")
+				{
+
+					if (runStates.ContainsKey(variableName))
+					{
+						runStates[variableName].Value = value;
+						runStates[variableName].Operator = operation;
+					}
+					else
+					{
+						ObjectRunState runState = new ObjectRunState();
+						runState.Name = variableName;
+						runState.Value = value;
+						runState.Operator = operation;
+						runStates.Add(variableName, runState);
+					}
+
+				}
+				else
+				{
+					if (runStates.ContainsKey(variableName))
+					{
+						runStates.Remove(variableName);
+
+					}
+				}
+				element.RunState = CreateRunStateString(runStates);
+				element.Update();
+			}
+		}
+
+
+		public static List<ObjectRunState> GetObjectRunStates(this EAAPI.Element element)
+		{
+			List<ObjectRunState> result = new List<ObjectRunState>();
+
+			Dictionary<string, ObjectRunState> runStates = ParseRunStateString(element.RunState);
+
+			foreach (KeyValuePair<string, ObjectRunState> keyValuePair in runStates)
+			{
+				ObjectRunState runState = keyValuePair.Value;
+				result.Add(runState);
+			}
+
+			return result;
+		}
+
+
+		private static Dictionary<string, ObjectRunState> ParseRunStateString(string runStateString)
+		{
+			Dictionary<string, ObjectRunState> result = new Dictionary<string, ObjectRunState>();
+
+			char[] semikolonSeparator = { ';' };
+
+			string[] tokens = runStateString.Split(semikolonSeparator);
+
+			ObjectRunState runState = null;
+
+			foreach (string token in tokens)
+			{
+				if (token == "@VAR")
+				{
+					runState = new ObjectRunState();
+				}
+				else if (token.StartsWith("Variable="))
+				{
+					runState.Name = token.Substring(9);
+				}
+				else if (token.StartsWith("Value="))
+				{
+					runState.Value = token.Substring(6);
+				}
+				else if (token.StartsWith("Op="))
+				{
+					runState.Operator = token.Substring(3);
+				}
+				else if (token.StartsWith("Note="))
+				{
+					runState.Notes = token.Substring(5);
+				}
+				else if (token == "@ENDVAR")
+				{
+					result.Add(runState.Name, runState);
+				}
+			}
+
+			return result;
+
+		}
+
+
+		private static string CreateRunStateString(Dictionary<string, ObjectRunState> runStates)
+		{
+			string result = "";
+
+			foreach (KeyValuePair<string, ObjectRunState> o in runStates)
+			{
+				ObjectRunState runState = o.Value;
+
+				result += "@VAR;";
+				result += "Variable=" + runState.Name + ";";
+				result += "Value=" + runState.Value + ";";
+				if (runState.Notes != "")
+				{
+					result += "Notes=" + runState.Notes + ";";
+				}
+				result += "Op=" + runState.Operator + ";";
+				result += "@ENDVAR;";
+
+			}
+
+			return result;
 		}
 
 	}
