@@ -353,5 +353,63 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 			return result;
 		}
 
-	}
+        public static string GetElementKind(this EAAPI.Element element)
+        {
+            for (short i = 0; i < element.CustomProperties.Count; i++)
+            {
+                EA.CustomProperty cprop = (EA.CustomProperty)element.CustomProperties.GetAt(i);
+                if (cprop.Name == "kind")
+                {
+                    return cprop.Value;
+                }
+            }
+            return "";
+        }
+
+        public static EAAPI.Element Copy(this EAAPI.Element source, EAAPI.Package targetPackage)
+        {
+            EAAPI.Element targetElement = (EAAPI.Element)targetPackage.Elements.AddNew(source.Name, source.Type);
+
+            targetElement.ClassifierID = source.ClassifierID;
+            targetElement.Stereotype = source.Stereotype;
+
+            if (source.Type == "Part")
+            {
+                targetElement.PropertyType = source.PropertyType;
+            }
+            /*
+            if (source.Type == "Action")
+            {
+                for (int i = 0; i < source.Elements.Count; i++)
+                {
+                    EA.Element sourceEmbeddedEl = (EA.Element) source.Elements.GetAt((short)i);
+                    EA.Element embeddedEl = (EA.Element) el.Elements.AddNew(sourceEmbeddedEl.Name, sourceEmbeddedEl.Type);
+                    embeddedEl.ClassfierID = sourceEmbeddedEl.ClassfierID;
+                    embeddedEl.Stereotype = sourceEmbeddedEl.Stereotype;
+
+                    embeddedEl.Update();
+                    el.Elements.Refresh();
+                }
+            }
+            */
+
+            // copy tagged values
+            for (short i = 0; i < source.TaggedValues.Count; i++)
+            {
+                EAAPI.TaggedValue sourceTag = (EAAPI.TaggedValue)source.TaggedValues.GetAt(i);
+                EAAPI.TaggedValue targetTag = (EAAPI.TaggedValue)targetElement.TaggedValues.AddNew(sourceTag.Name, sourceTag.Value);
+                targetTag.Update();
+            }
+
+            targetElement.TaggedValues.Refresh();
+
+            targetElement.Update();
+
+
+            targetPackage.Elements.Refresh();
+            targetPackage.Element.Refresh();
+
+            return targetElement;
+        }
+    }
 }
