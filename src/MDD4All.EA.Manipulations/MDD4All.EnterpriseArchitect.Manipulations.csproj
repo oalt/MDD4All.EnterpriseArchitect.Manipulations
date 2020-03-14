@@ -51,12 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeManipulationExtensions.cs" />
     <Compile Include="ConnectorManipulationExtensions.cs" />
     <Compile Include="DiagramManipulationExtensions.cs" />
     <Compile Include="DiagramObjectManipulationExtensions.cs" />
     <Compile Include="ElementManipulationExtensions.cs" />
     <Compile Include="ObjectRunState.cs" />
+    <Compile Include="MethodManipulationExtensions.cs" />
     <Compile Include="PackageManipulationExtensions.cs" />
+    <Compile Include="ParameterManipulationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryManipulationExtensions.cs" />
   </ItemGroup>
