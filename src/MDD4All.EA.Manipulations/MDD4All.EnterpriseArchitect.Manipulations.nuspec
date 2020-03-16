@@ -11,7 +11,7 @@
     <!-- <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initial release.</releaseNotes>
+    <releaseNotes>Further extension methods added.</releaseNotes>
     <copyright>Copyright MDD4All.de</copyright>
     <tags>Manipulation EA</tags>
   </metadata>
