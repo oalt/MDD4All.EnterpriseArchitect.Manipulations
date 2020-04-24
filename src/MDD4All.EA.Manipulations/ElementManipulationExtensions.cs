@@ -134,7 +134,7 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 			return result;
 		}
 
-		public static void SetTaggedValueString(this EAAPI.Element modelElement, string tagName, string value, bool isMemo)
+		public static void SetTaggedValueString(this EAAPI.Element modelElement, string tagName, string value, bool isMemo = false)
 		{
 
 			for (short cnt = 0; cnt < modelElement.TaggedValues.Count; cnt++)
@@ -175,7 +175,8 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 
 		}
 
-		public static EAAPI.Method AddMethod(this EAAPI.Element parent, string name, string returnType = "void")
+
+        public static EAAPI.Method AddMethod(this EAAPI.Element parent, string name, string returnType = "void")
 		{
 			EAAPI.Method method = (EAAPI.Method)parent.Methods.AddNew(name, returnType); // 2nd parameter == return type
 			method.Update();
