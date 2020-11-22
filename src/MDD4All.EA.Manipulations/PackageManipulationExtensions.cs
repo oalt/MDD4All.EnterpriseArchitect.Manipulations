@@ -1,9 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 
+#if EA_FACADE
+using EAAPI = MDD4All.EAFacade.DataModels.Contracts;
+#else
 using EAAPI = EA;
+#endif
 
+#if EA_FACADE
+namespace MDD4All.EAFacade.Manipulations
+#else
 namespace MDD4All.EnterpriseArchitect.Manipulations
+#endif
 {
     public static class PackageManipulationExtensions
     {
@@ -41,7 +49,7 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 
         public static EAAPI.Diagram AddDiagram(this EAAPI.Package package, string diagramType)
         {
-            EAAPI.Diagram diagram = (EA.Diagram)package.Diagrams.AddNew(package.Name, diagramType);
+            EAAPI.Diagram diagram = (EAAPI.Diagram)package.Diagrams.AddNew(package.Name, diagramType);
 
             diagram.ShowDetails = 0;
 

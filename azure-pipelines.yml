@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'VS2017-Win2016'
+  vmImage: 'windows-latest'
 
 variables:
   solution: '**/*.sln'
@@ -28,50 +28,19 @@ steps:
     echo The version from src/version.txt is $(versionToBuild)
     @echo ##vso[build.updatebuildnumber]$(versionToBuild).$(build.buildnumber)
 
-- task: NuGetToolInstaller@0
+- task: DotNetCoreCLI@2
   inputs:
-    versionSpec: '4.9.1'
-     
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+    command: 'restore'
+    projects: '**/*.csproj'
 
-# update assembly version
-- powershell: |
-    function Update-SourceVersion
-    {
-        Param ([string]$Version)
-        $NewVersion = 'AssemblyVersion("' + $Version + '")';
-        Write-output $NewVersion
-        $NewFileVersion = 'AssemblyFileVersion("' + $Version + '")';
-        foreach ($o in $input) 
-        {
-            Write-output $o.FullName
-            $TmpFile = $o.FullName + ".tmp"
-            get-content $o.FullName | 
-            %{$_ -replace 'AssemblyVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)', $NewVersion } |
-            %{$_ -replace 'AssemblyFileVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)', $NewFileVersion }  > $TmpFile
-
-            move-item $TmpFile $o.FullName -force
-        }
-    }
-    foreach ($file in "AssemblyInfo.cs", "AssemblyInfo.vb" ) 
-    {
-        get-childitem -recurse |? {$_.Name -eq $file} | Update-SourceVersion $(build.buildnumber) ;
-    }
-   
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
   inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-
-- task: NuGetCommand@2
-  inputs:
-    command: pack
-    packagesToPack: '**/*.csproj'
-    versioningScheme: byBuildNumber
-    packDestination: '$(Build.ArtifactStagingDirectory)'
+    command: 'pack'
+    packDirectory: '$(Build.ArtifactStagingDirectory)'
+    projects: '**/*.csproj'
+    arguments: '-c $(buildConfiguration)' 
+    versioningScheme: byEnvVar
+    versionEnvVar: build.buildnumber
 
 - task: PublishBuildArtifacts@1
   inputs:

@@ -1,6 +1,14 @@
-﻿using EAAPI = EA;
+﻿#if EA_FACADE
+using EAAPI = MDD4All.EAFacade.DataModels.Contracts;
+#else
+using EAAPI = EA;
+#endif
 
+#if EA_FACADE
+namespace MDD4All.EAFacade.Manipulations
+#else
 namespace MDD4All.EnterpriseArchitect.Manipulations
+#endif
 {
 	public static class RepositoryManipulationExtensions
 	{
@@ -39,7 +47,7 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 
 			for (int i = 0; i < parentPackage.Elements.Count; i++)
 			{
-				EA.Element el = (EA.Element)parentPackage.Elements.GetAt((short)i);
+				EAAPI.Element el = (EAAPI.Element)parentPackage.Elements.GetAt((short)i);
 				if (el.ElementID == element.ElementID)
 				{
 					parentPackage.Elements.Delete((short)i);

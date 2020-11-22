@@ -2,13 +2,13 @@
 using System.Drawing;
 using System.Diagnostics;
 
-#if FACADE
-using EAAPI = MDD4All.EAFacade;
+#if EA_FACADE
+using EAAPI = MDD4All.EAFacade.DataModels.Contracts;
 #else
 using EAAPI = EA;
 #endif
 
-#if EAAPI
+#if EA_FACADE
 namespace MDD4All.EAFacade.Manipulations
 #else
 namespace MDD4All.EnterpriseArchitect.Manipulations

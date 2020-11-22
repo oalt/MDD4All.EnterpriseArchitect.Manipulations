@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-#if FACADE
-using EAAPI = MDD4All.EAFacade;
+#if EA_FACADE
+using EAAPI = MDD4All.EAFacade.DataModels.Contracts;
 #else
 using EAAPI = EA;
 #endif
 
-#if FACADE
+#if EA_FACADE
 namespace MDD4All.EAFacade.Manipulations
 #else
 namespace MDD4All.EnterpriseArchitect.Manipulations
@@ -358,7 +358,7 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
         {
             for (short i = 0; i < element.CustomProperties.Count; i++)
             {
-                EA.CustomProperty cprop = (EA.CustomProperty)element.CustomProperties.GetAt(i);
+                EAAPI.CustomProperty cprop = (EAAPI.CustomProperty)element.CustomProperties.GetAt(i);
                 if (cprop.Name == "kind")
                 {
                     return cprop.Value;
