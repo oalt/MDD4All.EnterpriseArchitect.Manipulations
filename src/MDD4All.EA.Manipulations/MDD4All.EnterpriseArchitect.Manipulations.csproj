@@ -4,6 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Company>MDD4All.de</Company>
     <Authors>Dr. Oliver Alt</Authors>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>MDD4All_Github.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -24,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MDD4All.EAFacade.DataModels.Contracts" Version="2.1.0.183" />
+    <PackageReference Include="MDD4All.EAFacade.DataModels.Contracts" Version="2.1.1.257" />
   </ItemGroup>
 
   <ItemGroup>
