@@ -6,6 +6,10 @@
     <Authors>Dr. Oliver Alt</Authors>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>MDD4All_Github.snk</AssemblyOriginatorKeyFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>(c) MDD4All.de</Copyright>
+    <Description>Extension methods for the Sparx Enterprise Architect API (Interop.EA) to provide extended data manipulation.</Description>
+    <PackageTags>EnterpriseArchitect Manipulation Extensions</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

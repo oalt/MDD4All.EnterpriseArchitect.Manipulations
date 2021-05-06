@@ -6,6 +6,10 @@
     <Authors>Dr. Oliver Alt</Authors>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>MDD4All_Github.snk</AssemblyOriginatorKeyFile>
+    <Description>Extension methods for the Sparx Enterprise Architect Facade API to provide extended data manipulation.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>(c) MD4All.de</Copyright>
+    <PackageReleaseNotes>EAFacade Manipulation Extensions</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
