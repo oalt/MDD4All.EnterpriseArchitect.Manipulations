@@ -18,11 +18,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Remove="MDD4All.EnterpriseArchitect.Manipulations.nuspec" />
-        <None Remove="packages.config" />
-    </ItemGroup>
-
-    <ItemGroup>
         <Folder Include="Properties\" />
     </ItemGroup>
 
