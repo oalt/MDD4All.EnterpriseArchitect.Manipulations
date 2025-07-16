@@ -145,5 +145,15 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
             parent.Element.Refresh();
             return result;
         }
+
+        public static bool SuppressNamespace(this EAAPI.Package package)
+        {
+            bool result = false;
+            if (!string.IsNullOrEmpty(package.Flags) && package.Flags.Contains("SNSP=true"))
+            {
+                result = true;
+            }
+            return result;
+        }
     }
 }
