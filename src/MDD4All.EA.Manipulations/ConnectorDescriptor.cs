@@ -1,4 +1,14 @@
-﻿namespace MDD4All.EnterpriseArchitect.Manipulations
+﻿#if EA_FACADE
+using EAAPI = MDD4All.EAFacade.DataModels.Contracts;
+#else
+using EAAPI = EA;
+#endif
+
+#if EA_FACADE
+namespace MDD4All.EAFacade.Manipulations
+#else
+namespace MDD4All.EnterpriseArchitect.Manipulations
+#endif
 {
     public class ConnectorDescriptor
     {
@@ -9,11 +19,11 @@
         public string SupplierID { get; set; } = "";
         public string DiagramID { get; set; } = "";
 
-        public ConnectorDescriptor(EA.EventProperties preConnectorProps)
+        public ConnectorDescriptor(EAAPI.EventProperties preConnectorProps)
         {
             for (int i = 0; i < preConnectorProps.Count; i++)
             {
-                EA.EventProperty prop = preConnectorProps.Get(i);
+                EAAPI.EventProperty prop = preConnectorProps.Get(i);
                 switch (i)
                 {
                     case 0:
