@@ -79,6 +79,23 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 
         }
 
+        public static EAAPI.Package GetChildPackageByName(this EAAPI.Package parent, string name)
+        {
+            EAAPI.Package result = null;
+
+            for (short i = 0; i < parent.Packages.Count; i++)
+            {
+                EAAPI.Package package = (EAAPI.Package)parent.Packages.GetAt(i);
+                if (package.Name == name)
+                {
+                    result = package;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
         public static EAAPI.Package GetChildPackageByNameAndStereotype(this EAAPI.Package parent, string name, string stereotype)
         {
             for (short i = 0; i < parent.Packages.Count; i++)
