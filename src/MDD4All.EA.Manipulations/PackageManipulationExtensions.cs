@@ -20,7 +20,7 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
         {
             // avoid null value for package name
             string packageName = "_UNDEFINED_";
-            if (name != null)
+            if (!string.IsNullOrEmpty(name))
             {
                 packageName = name;
             }
