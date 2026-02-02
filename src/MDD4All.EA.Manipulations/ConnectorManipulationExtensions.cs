@@ -69,5 +69,28 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
             connector.TaggedValues.Refresh();
 
         }
+
+        public static EAAPI.Connector AddConnector(this EAAPI.Connector sourceConnector, 
+                                                   EAAPI.Repository repository, 
+                                                   EAAPI.Element targetElement, 
+                                                   string type)
+        {
+            EAAPI.Connector result = null;
+
+            // get the source element package to add the 'ProxyConnector' element there
+            EAAPI.Element sourceElement = repository.GetElementByID(sourceConnector.ClientID);
+            EAAPI.Package package = repository.GetPackageByID(sourceElement.PackageID);
+
+            // create the 'ProxyConnector' element
+            EAAPI.Element proxyConnectorElement = package.AddElement("ProxyConnector", "ProxyConnector");
+
+            // set the ClassifierGUID of the proxy connector element with the guid of the connector where the new connector should start
+            repository.Execute("UPDATE t_object SET Classifier_guid='" + sourceConnector.ConnectorGUID + "' WHERE Object_ID=" + proxyConnectorElement.ElementID + ";");
+
+            // add the connector
+            result = proxyConnectorElement.AddConnector(targetElement, type);
+
+            return result;
+        }
     }
 }
