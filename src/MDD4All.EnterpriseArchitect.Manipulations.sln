@@ -1,14 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30503.244
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36401.2 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MDD4All.EnterpriseArchitect.Manipulations", "MDD4All.EA.Manipulations\MDD4All.EnterpriseArchitect.Manipulations.csproj", "{A794FE75-D2C3-4794-8532-268B424D251F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{83286B50-FB10-47CD-A231-300CB18F3E6F}"
 	ProjectSection(SolutionItems) = preProject
-		..\azure-pipelines.yml = ..\azure-pipelines.yml
-		build.xml = build.xml
+		..\.github\workflows\build.yml = ..\.github\workflows\build.yml
 		version.txt = version.txt
 	EndProjectSection
 EndProject

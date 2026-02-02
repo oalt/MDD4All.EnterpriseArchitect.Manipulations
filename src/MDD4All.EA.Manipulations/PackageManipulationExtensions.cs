@@ -20,7 +20,7 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
         {
             // avoid null value for package name
             string packageName = "_UNDEFINED_";
-            if (name != null)
+            if (!string.IsNullOrEmpty(name))
             {
                 packageName = name;
             }
@@ -77,6 +77,23 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
             }
             return null;
 
+        }
+
+        public static EAAPI.Package GetChildPackageByName(this EAAPI.Package parent, string name)
+        {
+            EAAPI.Package result = null;
+
+            for (short i = 0; i < parent.Packages.Count; i++)
+            {
+                EAAPI.Package package = (EAAPI.Package)parent.Packages.GetAt(i);
+                if (package.Name == name)
+                {
+                    result = package;
+                    break;
+                }
+            }
+
+            return result;
         }
 
         public static EAAPI.Package GetChildPackageByNameAndStereotype(this EAAPI.Package parent, string name, string stereotype)
@@ -143,6 +160,16 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 
             parent.Elements.Refresh();
             parent.Element.Refresh();
+            return result;
+        }
+
+        public static bool SuppressNamespace(this EAAPI.Package package)
+        {
+            bool result = false;
+            if (!string.IsNullOrEmpty(package.Flags) && package.Flags.Contains("SNSP=true"))
+            {
+                result = true;
+            }
             return result;
         }
     }

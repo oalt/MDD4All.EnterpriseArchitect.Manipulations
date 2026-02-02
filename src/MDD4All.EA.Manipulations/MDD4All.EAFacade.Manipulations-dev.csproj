@@ -10,6 +10,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>(c) MD4All.de</Copyright>
     <PackageReleaseNotes>EAFacade Manipulation Extensions</PackageReleaseNotes>
+    <AssemblyName>MDD4All.EAFacade.Manipulations</AssemblyName>
+    <RootNamespace>MDD4All.EAFacade.Manipulations</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -25,13 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="MDD4All.EnterpriseArchitect.Manipulations.nuspec" />
-    <None Remove="packages.config" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <PackageReference Include="MDD4All.EAFacade.DataModels.Contracts" Version="2.2.0.2" />
+    <ProjectReference Include="..\..\..\MDD4All.EAFacade.DataModels.Contracts\src\MDD4All.EAFacade.DataModels.Contracts\MDD4All.EAFacade.DataModels.Contracts-dev.csproj" />
   </ItemGroup>
 
 </Project>

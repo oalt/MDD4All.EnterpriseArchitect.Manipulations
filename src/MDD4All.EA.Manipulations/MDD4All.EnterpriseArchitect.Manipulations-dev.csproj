@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <Company>MDD4All.de</Company>
+        <Authors>Dr. Oliver Alt</Authors>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>MDD4All_Github.snk</AssemblyOriginatorKeyFile>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Copyright>(c) MDD4All.de</Copyright>
+        <Description>Extension methods for the Sparx Enterprise Architect API (Interop.EA) to provide extended data manipulation.</Description>
+        <PackageTags>EnterpriseArchitect Manipulation Extensions</PackageTags>
+        <AssemblyName>MDD4All.EnterpriseArchitect.Manipulations</AssemblyName>
+        <RootNamespace>MDD4All.EnterpriseArchitect.Manipulations</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DefineConstants>TRACE</DefineConstants>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Reference Include="Interop.EA">
+            <HintPath>..\libs\Interop.EA.dll</HintPath>
+            <EmbedInteropTypes>false</EmbedInteropTypes>
+        </Reference>
+    </ItemGroup>
+
+</Project>

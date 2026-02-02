@@ -39,5 +39,32 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 
             return result;
         }
+
+        /// <summary>
+        /// Create a connector between the attribute and another model element. 
+        /// (linked to element feature 'attribute')
+        /// </summary>
+        /// <param name="attribute">The attribute.</param>
+        /// <param name="repository">The EA repository.</param>
+        /// <param name="targetElement">The target element for the connector end (supplier).</param>
+        /// <param name="connectorType">The connector type.</param>
+        /// <returns>The created connector.</returns>
+        public static EAAPI.Connector AddConnector(this EAAPI.Attribute attribute, 
+                                                   EAAPI.Repository repository, 
+                                                   EAAPI.Element targetElement, 
+                                                   string connectorType)
+        {
+            // get the element that contains the attribute
+            EAAPI.Element element = repository.GetElementByID(attribute.ParentID);
+
+            // add the connector to the element
+            EAAPI.Connector result = element.AddConnector(targetElement, connectorType);
+
+            // set StyleEx of the connector. This will link the connector to the attribute
+            result.StyleEx = "LFSP=" + attribute.AttributeGUID + "R;";
+            result.Update();
+
+            return result;
+        }
     }
 }

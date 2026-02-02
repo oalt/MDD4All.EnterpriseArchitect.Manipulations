@@ -26,10 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="Interop.EA">
       <HintPath>..\libs\Interop.EA.dll</HintPath>
       <EmbedInteropTypes>false</EmbedInteropTypes>
