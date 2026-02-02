@@ -1,5 +1,8 @@
 # MDD4All.EnterpriseArchitect.Manipulations
 
+[![Nuget Package Build](https://github.com/oalt/MDD4All.EnterpriseArchitect.Manipulations/actions/workflows/build.yml/badge.svg)](https://github.com/oalt/MDD4All.EnterpriseArchitect.Manipulations/actions/workflows/build.yml)
+[![NuGet version](https://badge.fury.io/nu/MDD4All.EnterpriseArchitect.Manipulations.svg?icon=si%3Anuget)](https://badge.fury.io/nu/MDD4All.EnterpriseArchitect.Manipulations)
+
 This project contains a collection of Enterprise Architect API helpers for the modeling platform [Spax Systems Enterprise Architect](https://www.sparxsystems.com) (EA). 
 It is realized as a collection of extension methods for the existing Sparx Systems Enterprise Architect API (Interop.EA.dll).
 
