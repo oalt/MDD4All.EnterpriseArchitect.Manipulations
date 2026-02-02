@@ -1,0 +1,63 @@
+name: Nuget Package Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_NAME: MDD4All.EnterpriseArchitect.Manipulations
+      FACADE_PROJECT_NAME: MDD4All.EAFacade.Manipulations
+      PROJECT_FOLDER: MDD4All.EA.Manipulations
+
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Read VERSION file
+      id: fileVersion
+      run: echo "FILE_VERSION_OUT=$(cat src/version.txt)" >> $GITHUB_OUTPUT
+
+    - name: Set version as environment variable
+      run: echo "VERSION=$(echo $FILE_VERSION.$GITHUB_RUN_NUMBER)" >> $GITHUB_ENV
+      env:
+        FILE_VERSION: ${{steps.fileVersion.outputs.FILE_VERSION_OUT}}
+
+    - name: Echo version number
+      run: echo $VERSION
+
+    - name: Restore dependencies for EA-API version
+      run: dotnet restore ./src/${PROJECT_FOLDER}/${PROJECT_NAME}.csproj
+
+    - name: Build EA-API version
+      run: dotnet build --no-restore -c Release /p:Version=${VERSION} ./src/${PROJECT_FOLDER}/${PROJECT_NAME}.csproj
+
+    - name: Create nuget package(s) for EA-API version
+      run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output ./Output ./src/${PROJECT_FOLDER}/${PROJECT_NAME}.csproj
+
+    - name: Restore dependencies for Facade version
+      run: dotnet restore ./src/${PROJECT_FOLDER}/${FACADE_PROJECT_NAME}.csproj
+
+    - name: Build Facade version
+      run: dotnet build --no-restore -c Release /p:Version=${VERSION} ./src/${PROJECT_FOLDER}/${FACADE_PROJECT_NAME}.csproj
+
+    - name: Create nuget package(s) for Facade
+      run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output ./Output ./src/${PROJECT_FOLDER}/${FACADE_PROJECT_NAME}.csproj
+
+    - name: Upload artifact(s)
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{env.PROJECT_NAME}}.${{env.VERSION}}
+        path: ./Output/*.nupkg
+      
