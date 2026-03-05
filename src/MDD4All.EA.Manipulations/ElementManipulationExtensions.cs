@@ -412,5 +412,53 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 
             return targetElement;
         }
+
+		public static void Delete(this EAAPI.Element element, EAAPI.Repository repository)
+		{
+			EAAPI.Package elementPackage = repository.GetPackageByID(element.PackageID);
+
+			int elementID = element.ElementID;
+
+			short deleteIndex = -1;
+
+			for (short counter = 0; counter < elementPackage.Elements.Count; counter++)
+			{
+				EAAPI.Element currentElement = (EAAPI.Element)elementPackage.Elements.GetAt(counter);
+				if (currentElement.ElementID == elementID)
+				{
+					deleteIndex = counter;
+					break;
+				}
+			}
+
+			if (deleteIndex != -1)
+			{
+				elementPackage.Elements.Delete(deleteIndex);
+				elementPackage.Elements.Refresh();
+			}
+		}
+
+        public static void DeleteAttribute(this EAAPI.Element attributeOwnerElement, EAAPI.Attribute attribute)
+        {
+            short deleteIndex = -1;
+
+            for (short counter = 0; counter < attributeOwnerElement.Attributes.Count; counter++)
+            {
+                EAAPI.Attribute currentAttribute = (EAAPI.Attribute)attributeOwnerElement.Attributes.GetAt(counter);
+
+                if (currentAttribute.AttributeID == attribute.AttributeID)
+                {
+                    deleteIndex = counter;
+                    break;
+                }
+            }
+
+            if (deleteIndex != -1)
+            {
+                attributeOwnerElement.Attributes.Delete(deleteIndex);
+                attributeOwnerElement.Attributes.Refresh();
+            }
+
+        }
     }
 }
