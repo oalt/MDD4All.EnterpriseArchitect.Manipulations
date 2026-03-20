@@ -172,5 +172,52 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
             }
             return result;
         }
+
+        public static EAAPI.Package ParentPackage(this EAAPI.Package package, EAAPI.Repository repository)
+        {
+            EAAPI.Package result = null;
+            
+            if(package.ParentID != 0)
+            {
+                result = repository.GetPackageByID(package.ParentID);
+            }
+
+            return result;
+        }
+
+        public static string GetNamespace(this EAAPI.Package package, EAAPI.Repository repository)
+        {
+            string result = "";
+
+            EAAPI.Package currentPackage = package;
+
+            while(true)
+            {
+                if(!currentPackage.SuppressNamespace())
+                {
+                    if (!currentPackage.IsNamespace)
+                    {
+                        result = "." + currentPackage.Name + result;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                currentPackage = currentPackage.ParentPackage(repository);
+
+                if(currentPackage == null)
+                {
+                    break;
+                }
+            }
+
+            if (result.Length > 1)
+            {
+                result = result.Substring(1);
+            }    
+            
+            return result;
+        }
     }
 }
