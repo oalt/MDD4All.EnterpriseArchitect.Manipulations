@@ -40,6 +40,7 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 			else
 			{
 				EAAPI.Element newElement = (EAAPI.Element)parent.Elements.AddNew(name, type);
+				newElement.ParentID = parent.ElementID;
 				if (!newElement.Update())
 				{
 					Debug.WriteLine(newElement.GetLastError());

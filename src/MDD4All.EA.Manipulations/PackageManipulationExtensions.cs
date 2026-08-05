@@ -42,7 +42,15 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 
             newElement.Update();
             parentPackage.Elements.Refresh();
-            parentPackage.Element.Refresh();
+
+            // parentPackage.Element (the package's own synthetic wrapper element) only
+            // resolves for packages that were part of the initial cache load; for a
+            // package created during the current session it is null, so guard the
+            // refresh instead of letting it throw a NullReferenceException.
+            if (parentPackage.Element != null)
+            {
+                parentPackage.Element.Refresh();
+            }
 
             return newElement;
         }
