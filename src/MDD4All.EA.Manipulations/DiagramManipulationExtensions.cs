@@ -64,5 +64,29 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 
 			return result;
 		}
+
+		/// <summary>
+		/// Get the DiagramLink for the given Connector
+		/// </summary>
+		/// <param name="diagram">The diagram to search for the DiagramLink</param>
+		/// <param name="connector">The connector.</param>
+		/// <returns>The diagram link or null if not found.</returns>
+		public static EAAPI.DiagramLink GetDiagramLinkForConnector(this EAAPI.Diagram diagram, EAAPI.Connector connector)
+		{
+			EAAPI.DiagramLink result = null;
+
+			for(short counter = 0; counter < diagram.DiagramLinks.Count; counter++)
+			{
+				EAAPI.DiagramLink diagramLink = diagram.DiagramLinks.GetAt(counter) as EAAPI.DiagramLink;
+
+				if(diagramLink.ConnectorID == connector.ConnectorID)
+				{
+					result = diagramLink;
+					break;
+				}
+			}
+
+			return result;
+		}
 	}
 }

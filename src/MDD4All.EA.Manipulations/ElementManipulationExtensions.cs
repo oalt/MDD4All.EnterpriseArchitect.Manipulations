@@ -461,5 +461,28 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
             }
 
         }
+
+        public static void DeleteMethod(this EAAPI.Element methodOwnerElement, EAAPI.Method method)
+        {
+            short deleteIndex = -1;
+
+            for (short counter = 0; counter < methodOwnerElement.Methods.Count; counter++)
+            {
+                EAAPI.Method currentMethod = (EAAPI.Method)methodOwnerElement.Methods.GetAt(counter);
+
+                if (currentMethod.MethodID == method.MethodID)
+                {
+                    deleteIndex = counter;
+                    break;
+                }
+            }
+
+            if (deleteIndex != -1)
+            {
+                methodOwnerElement.Methods.Delete(deleteIndex);
+                methodOwnerElement.Methods.Refresh();
+            }
+
+        }
     }
 }
