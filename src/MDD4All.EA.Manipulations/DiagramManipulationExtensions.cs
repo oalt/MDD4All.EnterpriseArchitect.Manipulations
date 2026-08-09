@@ -42,6 +42,36 @@ namespace MDD4All.EnterpriseArchitect.Manipulations
 		}
 
 		/// <summary>
+		/// Show a connector on a diagram (add a DiagramLink referencing it), so it does not have
+		/// to rely on EA's automatic linking of connectors between two elements already placed
+		/// on the diagram.
+		/// </summary>
+		/// <param name="diagram">The diagram.</param>
+		/// <param name="connector">The connector to show.</param>
+		public static void AddConnector(this EAAPI.Diagram diagram, EAAPI.Connector connector)
+		{
+			for (short i = 0; i < diagram.DiagramLinks.Count; i++)
+			{
+				EAAPI.DiagramLink existingDiagramLink = diagram.DiagramLinks.GetAt(i) as EAAPI.DiagramLink;
+				if (existingDiagramLink.ConnectorID == connector.ConnectorID)
+				{
+					// Connector already shown on diagram, return
+					return;
+				}
+			}
+
+			EAAPI.DiagramLink diagramLink = (EAAPI.DiagramLink)diagram.DiagramLinks.AddNew("", "");
+
+			diagramLink.ConnectorID = connector.ConnectorID;
+
+			if (!diagramLink.Update())
+			{
+				Debug.WriteLine(diagramLink.GetLastError());
+			}
+			diagram.Update();
+		}
+
+		/// <summary>
 		/// Get the DiagramObject for the given Element
 		/// </summary>
 		/// <param name="diagram">The diagram to search for the DiagramObject</param>
