@@ -1,6 +1,7 @@
 name: Nuget Package Build
 
 on:
+  workflow_dispatch:
   push:
     branches: [ master ]
   pull_request:
@@ -18,12 +19,12 @@ jobs:
 
     steps:
     - name: Checkout source code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v7
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v6
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 10.0.x
 
     - name: Read VERSION file
       id: fileVersion
@@ -56,7 +57,7 @@ jobs:
       run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output ./Output ./src/${PROJECT_FOLDER}/${FACADE_PROJECT_NAME}.csproj
 
     - name: Upload artifact(s)
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: ${{env.PROJECT_NAME}}.${{env.VERSION}}
         path: ./Output/*.nupkg
